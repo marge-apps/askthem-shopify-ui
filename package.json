@@ -1,0 +1,59 @@
+{
+  "name": "askthem-shopify-ui",
+  "version": "0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "parcel build src/index.html",
+    "dev": "parcel --port 3000 src/index.html",
+    "lint": "xo --prettier",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@shopify/polaris": "^2.11.0",
+    "apollo-boost": "^0.1.16",
+    "emotion": "^9.2.12",
+    "graphql": "^14.0.2",
+    "graphql-tag": "^2.10.0",
+    "ramda": "^0.25.0",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2",
+    "react-emotion": "^9.2.12",
+    "recompose": "^0.30.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-react": "^7.0.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-jest": "^23.6.0",
+    "eslint-config-xo-react": "^0.17.0",
+    "eslint-plugin-react": "^7.11.1",
+    "husky": "^1.1.0",
+    "jest": "^23.6.0",
+    "lint-staged": "^7.3.0",
+    "parcel-bundler": "^1.10.1",
+    "xo": "^0.23.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "xo --fix --prettier",
+      "git add"
+    ]
+  },
+  "xo": {
+    "extends": [
+      "xo-react"
+    ],
+    "envs": [
+      "jest",
+      "browser"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn test"
+    }
+  }
+}
