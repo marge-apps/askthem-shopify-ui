@@ -16,6 +16,7 @@
     "emotion": "^9.2.12",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
+    "query-string": "^6.2.0",
     "ramda": "^0.25.0",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
