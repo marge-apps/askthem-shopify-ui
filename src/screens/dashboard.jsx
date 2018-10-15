@@ -46,12 +46,6 @@ export const PerformanceChart = ({data}) => (
 	</ResponsiveContainer>
 );
 
-export const DisplayCard = ({ title, size = 'large', children }) => (
-	<Card sectioned title={title}>
-
-	</Card>
-);
-
 export const ViewError = () => (
 	<EmptyState
 		heading="Something went wrong"
@@ -71,8 +65,7 @@ export const ViewLoading = (props) => (
 			{ content: 'Surveys' },
 			{ content: 'Settings' },
 		]}
-	>
-
+		>
 		<RangePicker range={props.range} setRange={props.setRange}/>
 
 		<Layout>
@@ -103,12 +96,7 @@ export const ViewLoading = (props) => (
 					title="Latest complete surveys"
 					actions={[{content: 'View all'}]}
 					>
-					<br/>
-					{
-						// TODO: Fix me
-					}
-
-					<SkeletonBodyText />
+		     		<SkeletonBodyText />
 				</Card>
 			</Layout.Section>
 		</Layout>
@@ -184,11 +172,12 @@ const View = props => (
 
 const withRange = withState('range', 'setRange', 30)
 const handleLoading = branch(pathEq(['data', 'loading'], true), renderComponent(ViewLoading))
-
+const handleError = branch(pathEq(['data', 'error'], true), renderComponent(ViewError))
 
 export default compose(
 withRange,
 handleLoading,
+handleError,
 withProps({
 	positiveResponses: 20,
 	negativeResponses: 10,
