@@ -5,12 +5,13 @@
 	"license": "MIT",
 	"private": true,
 	"scripts": {
-		"build": "parcel build src/index.html",
-		"dev": "parcel --port 3000 src/index.html",
+		"build": "parcel --no-autoinstall build src/index.html",
+		"dev": "parcel --no-autoinstall --port 3000 src/index.html",
 		"lint": "xo --prettier",
 		"test": "jest"
 	},
 	"dependencies": {
+		"@rebass/grid": "^6.0.0-4",
 		"@shopify/polaris": "^2.11.0",
 		"apollo-boost": "^0.1.16",
 		"emotion": "^9.2.12",
@@ -19,6 +20,7 @@
 		"query-string": "^6.2.0",
 		"ramda": "^0.25.0",
 		"react": "^16.5.2",
+		"react-apollo": "^2.2.4",
 		"react-dom": "^16.5.2",
 		"react-emotion": "^9.2.12",
 		"react-icons": "^3.2.0",

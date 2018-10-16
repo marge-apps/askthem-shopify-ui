@@ -1,9 +1,18 @@
 import React from 'react';
-import {Card, Layout, Page, FilterType, ResourceList, TextStyle} from '@shopify/polaris';
+import {graphql} from 'react-apollo'
+import gql from 'graphql-tag';
+import {Card, Layout, Page, FilterType, Pagination, ResourceList, TextStyle} from '@shopify/polaris';
+import { Flex, Box } from '@rebass/grid/emotion'
 import {compose, withState} from 'recompose'
 
 const handleSearch = withState('searchQuery', 'setSearchQuery', '')
 const handleFilters = withState('appliedFilters', 'setAppliedFilters', [])
+
+const fetchSurveys = graphql(gql`
+    query surveys {
+        id
+    }
+`)
 
 const filters = [
     {
@@ -41,10 +50,18 @@ const Survey = ({id, url, name, location}) => (
 );
 
 const View = props => (
-	<Page title="Surveys" breadcrumbs={[{content: 'Dashboard', url: '/'}]}>
+    <Page
+        title="Surveys"
+        breadcrumbs={[{content: 'Dashboard', url: '/'}]}
+        pagination={{
+            hasPrevious: false,
+            hasNext: false,
+        }}
+        >
 		<Layout sectioned>
 			<Card sectioned>
 				<ResourceList
+                    hasMoreItems
 					resourceName={{
 						singular: 'survey',
 						plural: 'surveys',
@@ -61,6 +78,11 @@ const View = props => (
 					items={[]}
 					renderItem={Survey}
 				/>
+                <Flex direction="row" justifyContent="center">
+                    <Box>
+                        <Pagination />
+                    </Box>
+                </Flex>
 			</Card>
 		</Layout>
 	</Page>
@@ -69,6 +91,7 @@ const View = props => (
 const enhance = compose(
     handleSearch,
     handleFilters,
+    fetchSurveys,
 )
 
 export default enhance(View);

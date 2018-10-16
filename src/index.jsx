@@ -5,12 +5,14 @@ import {Route} from 'react-router-dom';
 
 import withAppProvider from './hoc/add-shopify-app-provider.jsx';
 import addRouter from './hoc/add-router.jsx';
+import addApolloClient from './hoc/add-apollo-client.jsx';
 import Dashboard from './screens/dashboard.jsx';
 import Surveys from './screens/surveys';
 
 const domContainer = document.querySelector('#app');
 
 const enhance = compose(
+	addApolloClient,
 	addRouter,
 	withAppProvider,
 );

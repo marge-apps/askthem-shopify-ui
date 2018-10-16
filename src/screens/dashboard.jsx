@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import { ActionList, Button, Popover, Card, ResourceList, DisplayText, EmptyState, Layout, Page, SkeletonBodyText, SkeletonDisplayText, TextStyle} from '@shopify/polaris';
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip, ResponsiveContainer} from 'recharts'
 import {css} from 'react-emotion'
@@ -105,7 +106,7 @@ export const ViewLoading = (props) => (
 				<Card
 					sectioned
 					title="Latest complete surveys"
-					actions={[{content: 'View all'}]}
+					actions={[{content: 'View all', url: '/surveys'}]}
 					>
 		     		<SkeletonBodyText />
 				</Card>
@@ -148,7 +149,7 @@ const View = props => (
 				<Card
 					sectioned
 					title="Latest complete surveys"
-					actions={[{content: 'View all'}]}
+					actions={[{content: 'View all', url: '/surveys'}]}
 					>
 					<ResourceList
 						resourceName={{singular: 'survey', plural: 'surveys'}}
