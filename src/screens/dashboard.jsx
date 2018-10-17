@@ -74,8 +74,8 @@ export const ViewLoading = (props) => (
 	<Page
 		title="Dashboard"
 		secondaryActions={[
-			{ content: 'Surveys' },
-			{ content: 'Settings' },
+			{ content: 'Surveys', url: '/surveys' },
+			{ content: 'Settings', url: '/settings' },
 		]}
 		>
 		<RangePicker range={props.range} setRange={props.setRange}/>
