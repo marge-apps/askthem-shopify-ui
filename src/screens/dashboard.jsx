@@ -120,7 +120,7 @@ const View = props => (
 		title="Dashboard"
 		secondaryActions={[
 			{content: 'Surveys', url: '/surveys'},
-			{content: 'Settings'},
+			{content: 'Settings', url: '/settings'},
 		]}
 	>
 

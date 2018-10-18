@@ -19,8 +19,10 @@ const handlePagination = withStateHandlers(
 )
 
 const fetchSurveys = graphql(gql`
-    query surveys {
-        id
+    query {
+    surveys {
+            id
+    }
     }
 `)
 
@@ -65,14 +67,17 @@ const View = props => (
         breadcrumbs={[{content: 'Dashboard', url: '/'}]}
         pagination={{
             hasPrevious: props.offset > 0,
+            hasNext: true,
             onPrevious: props.prevPage,
-            hasNext: false,
             onNext: props.nextPage,
         }}
+        secondaryActions={[
+            {icon:'refresh', content: 'Refresh', onAction: () => props.data.refetch()}
+        ]}
         >
 		<Layout sectioned>
             <Card sectioned>
-                <JsonView src={pick(['offset'], props)}/>
+                <JsonView src={pick(['data', 'offset', 'limit'], props)}/>
             </Card>
 
 			<Card sectioned>
