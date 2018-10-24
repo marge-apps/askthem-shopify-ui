@@ -1,5 +1,4 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
 import { ActionList, Button, Popover, Card, ResourceList, DisplayText, EmptyState, Layout, Page, SkeletonBodyText, SkeletonDisplayText, TextStyle} from '@shopify/polaris';
 import {LineChart, Line, CartesianGrid, XAxis, YAxis, Legend, Tooltip, ResponsiveContainer} from 'recharts'
 import {css} from 'react-emotion'

@@ -4,7 +4,7 @@ import ApolloClient from 'apollo-boost';
 import nest from 'recompose/nest';
 
 const client = new ApolloClient({
-	uri: 'https://8334839b.ngrok.io/graphql',
+	uri: 'https://ask-them-api.now.sh/graphql',
 });
 
 export default Component =>
