@@ -32,6 +32,7 @@ const Placeholder = styled('div')`
 
 const LoadingView = props => (
 	<Page
+		fullWidth
 		title="Surveys"
 		breadcrumbs={[{ content: 'Dashboard', url: '/' }]}
 		secondaryActions={[
@@ -129,6 +130,7 @@ const Survey = ({id, status, customer, review, order}) => (
 
 const View = props => (
 	<Page
+		fullWidth
 		title="Surveys"
 		breadcrumbs={[{ content: 'Dashboard', url: '/' }]}
 		pagination={{
@@ -146,10 +148,6 @@ const View = props => (
 		]}
 	>
 		<Layout sectioned>
-			{/* <Card sectioned>
-				<JsonView src={pick(['data'], props)} />
-			</Card> */}
-
 			<Card sectioned>
 				<ResourceList
                     loading={props.data.loading}
