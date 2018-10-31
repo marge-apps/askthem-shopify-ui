@@ -62,7 +62,10 @@
 		"envs": [
 			"jest",
 			"browser"
-		]
+		],
+		"rules": {
+			"react/prop-types": "off"
+		}
 	},
 	"husky": {
 		"hooks": {

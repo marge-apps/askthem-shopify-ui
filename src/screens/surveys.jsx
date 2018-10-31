@@ -1,26 +1,26 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
 import {
-    Avatar,
-    Card,
+	Avatar,
+	Card,
 	Layout,
-    Page,
-    Spinner,
-    SkeletonPage,
+	Page,
+	Spinner,
+	SkeletonPage,
 	FilterType,
 	Pagination,
 	ResourceList,
-	TextStyle,
+	TextStyle
 } from '@shopify/polaris';
-import styled from 'react-emotion'
-import { Flex, Box } from '@rebass/grid/emotion';
+import styled from 'react-emotion';
+import {Flex, Box} from '@rebass/grid/emotion';
 import {
-    branch,
+	branch,
 	compose,
 	withState,
 	withStateHandlers,
-	renderComponent,
+	renderComponent
 } from 'recompose';
 import JsonView from 'react-json-view';
 import {allPass, pipe, max, pick, path, isEmpty, pathOr} from 'ramda';
@@ -28,31 +28,31 @@ import {allPass, pipe, max, pick, path, isEmpty, pathOr} from 'ramda';
 const Placeholder = styled('div')`
     padding: 100px 0;
     text-align: center;
-`
+`;
 
 const LoadingView = props => (
 	<Page
 		fullWidth
 		title="Surveys"
-		breadcrumbs={[{ content: 'Dashboard', url: '/' }]}
+		breadcrumbs={[{content: 'Dashboard', url: '/'}]}
 		secondaryActions={[
 			{
 				icon: 'refresh',
 				content: 'Refresh',
-				onAction: () => props.data.refetch(),
-			},
+				onAction: () => props.data.refetch()
+			}
 		]}
 		pagination={{
 			hasPrevious: false,
-			hasNext: false,
+			hasNext: false
 		}}
-		>
+	>
 		<Layout>
 			<Layout.Section>
 				<Card sectioned>
-                    <Placeholder>
-                        <Spinner />
-                    </Placeholder>
+					<Placeholder>
+						<Spinner/>
+					</Placeholder>
 				</Card>
 			</Layout.Section>
 		</Layout>
@@ -60,20 +60,20 @@ const LoadingView = props => (
 );
 
 const handleLoading = branch(
-    allPass([
-        path(['data', 'loading']),
-        pipe(pathOr([], ['data', 'surveys', 'surveys']), isEmpty)
-    ]),
-    renderComponent(LoadingView)
+	allPass([
+		path(['data', 'loading']),
+		pipe(pathOr([], ['data', 'surveys', 'surveys']), isEmpty)
+	]),
+	renderComponent(LoadingView)
 );
 
 const handleSearch = withState('searchQuery', 'setSearchQuery', '');
 const handleFilters = withState('appliedFilters', 'setAppliedFilters', []);
 const handlePagination = withStateHandlers(
-	{ limit: 20, offset: 0 },
+	{limit: 20, offset: 0},
 	{
-		nextPage: ({ offset, limit }) => () => ({ offset: offset + limit }),
-		prevPage: ({ offset, limit }) => () => ({ offset: max(0, offset - limit) }),
+		nextPage: ({offset, limit}) => () => ({offset: offset + limit}),
+		prevPage: ({offset, limit}) => () => ({offset: max(0, offset - limit)})
 	},
 );
 
@@ -104,15 +104,15 @@ const filters = [
 		label: 'Survey status',
 		operatorText: 'is',
 		type: FilterType.Select,
-		options: ['pending', 'complete', 'cancelled'],
+		options: ['pending', 'complete', 'cancelled']
 	},
 	{
 		key: 'reviewSatisfaction',
 		label: 'Review satisfaction',
 		operatorText: 'is',
 		type: FilterType.Select,
-		options: ['satisfied', 'not satisfied'],
-	},
+		options: ['satisfied', 'not satisfied']
+	}
 ];
 
 const Survey = ({id, status, customer, review, order}) => (
@@ -132,29 +132,29 @@ const View = props => (
 	<Page
 		fullWidth
 		title="Surveys"
-		breadcrumbs={[{ content: 'Dashboard', url: '/' }]}
+		breadcrumbs={[{content: 'Dashboard', url: '/'}]}
 		pagination={{
 			hasPrevious: props.offset > 0,
 			hasNext: true,
 			onPrevious: props.prevPage,
-			onNext: props.nextPage,
+			onNext: props.nextPage
 		}}
 		secondaryActions={[
 			{
 				icon: 'refresh',
 				content: 'Refresh',
-				onAction: () => props.data.refetch(),
-			},
+				onAction: () => props.data.refetch()
+			}
 		]}
 	>
 		<Layout sectioned>
 			<Card sectioned>
 				<ResourceList
-                    loading={props.data.loading}
+					loading={props.data.loading}
 					hasMoreItems
 					resourceName={{
 						singular: 'survey',
-						plural: 'surveys',
+						plural: 'surveys'
 					}}
 					filterControl={
 						<ResourceList.FilterControl
@@ -173,7 +173,7 @@ const View = props => (
 						<Pagination
 							hasPrevious={props.offset > 0}
 							onPrevious={props.prevPage}
-							hasNext={true}
+							hasNext
 							onNext={props.nextPage}
 						/>
 					</Box>
@@ -186,9 +186,9 @@ const View = props => (
 const enhance = compose(
 	handleSearch,
 	handleFilters,
-    handlePagination,
-    fetchSurveys,
-    handleLoading,
+	handlePagination,
+	fetchSurveys,
+	handleLoading,
 );
 
 export default enhance(View);

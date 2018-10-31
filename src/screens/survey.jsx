@@ -1,46 +1,45 @@
 import React from 'react';
-import { graphql } from 'react-apollo';
+import {graphql} from 'react-apollo';
 import gql from 'graphql-tag';
-import {Timeline, TimelineEvent} from 'react-event-timeline'
 import {
-    Card,
+	Card,
 	Layout,
-    Page,
-    DisplayText,
-    TextContainer,
-    ResourceList,
-    TextStyle,
+	Page,
+	DisplayText,
+	TextContainer,
+	ResourceList,
+	TextStyle
 } from '@shopify/polaris';
 import {
-    branch,
+	branch,
 	compose,
 	withState,
 	withStateHandlers,
-	renderComponent,
+	renderComponent
 } from 'recompose';
-import TimeAgo from 'react-timeago'
-import {path} from 'ramda'
-import Markdown from '../components/markdown'
-import {Satisfaction} from '../components/satisfaction'
+import TimeAgo from 'react-timeago';
+import {path} from 'ramda';
+import Markdown from '../components/markdown';
+import {Satisfaction} from '../components/satisfaction';
 
 const fixtureComment = `
 Nam molestias et sed. Voluptatum quod non quisquam deserunt repudiandae. Pariatur voluptas cum non blanditiis possimus vitae. Enim sunt ut repellendus reiciendis. Quas ut nostrum quos et similique assumenda. Sapiente minima veritatis labore hic mollitia.
 
 Exercitationem qui vel rerum mollitia et. Facere enim et at voluptate. Quis eos vero suscipit. Quia quia debitis esse eius aspernatur veritatis sit.
-`
+`;
 
 const LoadingView = props => (
 	<Page
 		title="Survey"
-		breadcrumbs={[{ content: 'Surveys', url: '/surveys' }]}
+		breadcrumbs={[{content: 'Surveys', url: '/surveys'}]}
 		secondaryActions={[
 			{
 				icon: 'refresh',
 				content: 'Refresh',
-				onAction: () => props.data.refetch(),
-            },
+				onAction: () => props.data.refetch()
+			}
 		]}
-		>
+	>
 		<Layout>
 			<Layout.Section>
 				<Card sectioned>
@@ -52,8 +51,8 @@ const LoadingView = props => (
 );
 
 const handleLoading = branch(
-    path(['data', 'loading']),
-    renderComponent(LoadingView)
+	path(['data', 'loading']),
+	renderComponent(LoadingView)
 );
 
 const fetchSurvey = graphql(gql`
@@ -77,68 +76,68 @@ const fetchSurvey = graphql(gql`
 const View = props => (
 	<Page
 		title="Survey"
-		breadcrumbs={[{ content: 'Surveys', url: '/surveys' }]}
+		breadcrumbs={[{content: 'Surveys', url: '/surveys'}]}
 		secondaryActions={[
 			{
 				icon: 'refresh',
 				content: 'Refresh',
-				onAction: () => props.data.refetch(),
-            },
-            {
-				icon: 'notification',
-				content: 'Resend notification',
+				onAction: () => props.data.refetch()
 			},
+			{
+				icon: 'notification',
+				content: 'Resend notification'
+			}
 		]}
 	>
 		<Layout>
-            <Layout.Section>
-                <Card
-                    title="Review"
-                    >
-                    <Card.Section>
-                        <DisplayText size={"medium"}>Satisfied</DisplayText>
-                    </Card.Section>
-                    <Card.Section title="Comment">
-                        <TextContainer>
-                            <Markdown source={fixtureComment}/>
-                        </TextContainer>
-                    </Card.Section>
-                </Card>
+			<Layout.Section>
+				<Card
+					title="Review"
+				>
+					<Card.Section>
+						<DisplayText size="medium">Satisfied</DisplayText>
+					</Card.Section>
+					<Card.Section title="Comment">
+						<TextContainer>
+							<Markdown source={fixtureComment}/>
+						</TextContainer>
+					</Card.Section>
+				</Card>
 
-                <Card title="Timeline">
-                    <ul>
-                        <li> Bought on Tuesday, 14th September 2018 </li>
-                        <li> Invited to review on Thursday, 21st September 2018 </li>
-                        <li> Reviewed on Friday, 22st September 2018 </li>
-                    </ul>
-                </Card>
-            </Layout.Section>
+				<Card title="Timeline">
+					<ul>
+						<li> Bought on Tuesday, 14th September 2018 </li>
+						<li> Invited to review on Thursday, 21st September 2018 </li>
+						<li> Reviewed on Friday, 22st September 2018 </li>
+					</ul>
+				</Card>
+			</Layout.Section>
 
-            <Layout.Section secondary>
-                <Card
-                    title="Order #123123"
-                    actions={[
-                        {content: 'View order'}
-                    ]}
-                    >
-                    <ul>
-                        <li><strong>Placed on:</strong> Tue, 18th March 2018</li>
-                        <li><strong>Total amount:</strong> 205.00</li>
-                    </ul>
+			<Layout.Section secondary>
+				<Card
+					title="Order #123123"
+					actions={[
+						{content: 'View order'}
+					]}
+				>
+					<ul>
+						<li><strong>Placed on:</strong> Tue, 18th March 2018</li>
+						<li><strong>Total amount:</strong> 205.00</li>
+					</ul>
 
-                </Card>
-                <Card
-                    actions={[{content: 'All surveys'}]}
-                    title="Previous surveys"
-                    >
-                <ResourceList
+				</Card>
+				<Card
+					actions={[{content: 'All surveys'}]}
+					title="Previous surveys"
+				>
+					<ResourceList
 						resourceName={{singular: 'survey', plural: 'surveys'}}
 						items={[{id: '1231', review: {satisfied: true, reviewedOn: new Date()}}]}
 						renderItem={({id, review}) => (
 							<ResourceList.Item
 								id={id}
-								media={<Satisfaction satisfied={review.satisfied} />}
-								>
+								media={<Satisfaction satisfied={review.satisfied}/>}
+							>
 								<h3>
 									<TextStyle variation="strong">
 										#{id}
@@ -151,16 +150,16 @@ const View = props => (
 								</div>
 							</ResourceList.Item>
 						)}
-						/>
-                </Card>
-            </Layout.Section>
+					/>
+				</Card>
+			</Layout.Section>
 		</Layout>
 	</Page>
 );
 
 const enhance = compose(
-    fetchSurvey,
-    handleLoading,
+	fetchSurvey,
+	handleLoading,
 );
 
 export default enhance(View);
