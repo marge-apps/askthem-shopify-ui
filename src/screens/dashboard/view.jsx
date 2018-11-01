@@ -1,14 +1,14 @@
 import React from 'react';
 import Markdown from 'react-markdown';
 import TimeAgo from 'react-timeago';
-
+import {pathOr} from 'ramda';
 import {
 	Card,
 	DisplayText,
 	Layout,
 	Page,
 	ResourceList,
-	TextStyle
+	TextStyle,
 } from '@shopify/polaris';
 
 import {Satisfaction} from '../../components/satisfaction.jsx';
@@ -20,27 +20,33 @@ export const View = props => (
 		title="Dashboard"
 		secondaryActions={[
 			{content: 'Surveys', url: '/surveys'},
-			{content: 'Settings', url: '/settings'}
+			{content: 'Settings', url: '/settings'},
 		]}
 	>
-		<RangePicker range={props.range} setRange={props.setRange}/>
+		<RangePicker range={props.range} setRange={props.setRange} />
 
 		<Layout>
 			<Layout.Section secondary>
 				<Card sectioned title="Positive responses">
-					<DisplayText size="medium">{props.data.getStatistics.positiveReviews}</DisplayText>
+					<DisplayText size="medium">
+						{props.data.getStatistics.positiveReviews}
+					</DisplayText>
 				</Card>
 			</Layout.Section>
 
 			<Layout.Section secondary>
 				<Card sectioned title="Negative responses">
-					<DisplayText size="medium">{props.data.getStatistics.negativeReviews}</DisplayText>
+					<DisplayText size="medium">
+						{props.data.getStatistics.negativeReviews}
+					</DisplayText>
 				</Card>
 			</Layout.Section>
 
 			<Layout.Section>
 				<Card sectioned title="Performance graph">
-					<PerformanceChart data={props.data.getStatistics.performance}/>
+					<PerformanceChart
+						data={pathOr([], ['data', 'getStatistics', 'perfomance'], props)}
+					/>
 				</Card>
 			</Layout.Section>
 
@@ -56,7 +62,7 @@ export const View = props => (
 						renderItem={({orderId, review}) => (
 							<ResourceList.Item
 								id={orderId}
-								media={<Satisfaction satisfied={review.satisfied}/>}
+								media={<Satisfaction satisfied={review.satisfied} />}
 							>
 								<h3>
 									<TextStyle variation="strong">
@@ -65,7 +71,7 @@ export const View = props => (
 								</h3>
 								<div>
 									<TextStyle variation="subdued">
-										<TimeAgo date={review.reviewedOn}/>
+										<TimeAgo date={review.reviewedOn} />
 									</TextStyle>
 								</div>
 								<Markdown>{review.comment}</Markdown>

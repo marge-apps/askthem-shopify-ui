@@ -1,12 +1,7 @@
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
 import {pathEq} from 'ramda';
-import {
-	compose,
-	withState,
-	branch,
-	renderComponent
-} from 'recompose';
+import {compose, withState, branch, renderComponent} from 'recompose';
 
 import {ViewLoading} from './loading.jsx';
 import {ViewError} from './error.jsx';
@@ -23,30 +18,31 @@ const handleError = branch(
 	renderComponent(ViewError),
 );
 
-const loadStatistics = graphql(gql`
-query {
-	getStatistics(dateFrom: "2018-01-01") {
-		positiveReviews
-    	negativeReviews
-    	perfomance {
-			reviewedAt
-			positiveReviews
-			negativeReviews
-		}
-	}
+const loadStatistics = graphql(
+	gql`
+		query {
+			getStatistics(dateFrom: "2018-01-01") {
+				positiveReviews
+				negativeReviews
+				perfomance {
+					reviewedAt
+					positiveReviews
+					negativeReviews
+				}
+			}
 
-	getSurveys(status: completed, limit: 5) {
-		surveys {
-			id
-    	}
-	}
-}
-`,
-{
-	options: {
-		notifyOnNetworkStatusChange: true
-	}
-}
+			getSurveys(status: completed, limit: 5) {
+				surveys {
+					id
+				}
+			}
+		}
+	`,
+	{
+		options: {
+			notifyOnNetworkStatusChange: true,
+		},
+	},
 );
 
 export default compose(

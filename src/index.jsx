@@ -21,11 +21,11 @@ const enhance = compose(
 
 const App = enhance(() => (
 	<div>
-		<Route exact path="/" component={Dashboard}/>
-		<Route exact path="/surveys" component={Surveys}/>
-		<Route path="/surveys/:surveyId" component={Survey}/>
-		<Route exact path="/settings" component={Settings}/>
+		<Route exact path="/" component={Dashboard} />
+		<Route exact path="/surveys" component={Surveys} />
+		<Route path="/surveys/:surveyId" component={Survey} />
+		<Route exact path="/settings" component={Settings} />
 	</div>
 ));
 
-ReactDOM.render(<App/>, domContainer);
+ReactDOM.render(<App />, domContainer);

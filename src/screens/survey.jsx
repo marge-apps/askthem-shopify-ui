@@ -8,14 +8,14 @@ import {
 	DisplayText,
 	TextContainer,
 	ResourceList,
-	TextStyle
+	TextStyle,
 } from '@shopify/polaris';
 import {
 	branch,
 	compose,
 	withState,
 	withStateHandlers,
-	renderComponent
+	renderComponent,
 } from 'recompose';
 import TimeAgo from 'react-timeago';
 import {path} from 'ramda';
@@ -36,15 +36,13 @@ const LoadingView = props => (
 			{
 				icon: 'refresh',
 				content: 'Refresh',
-				onAction: () => props.data.refetch()
-			}
+				onAction: () => props.data.refetch(),
+			},
 		]}
 	>
 		<Layout>
 			<Layout.Section>
-				<Card sectioned>
-                    Loading...
-				</Card>
+				<Card sectioned>Loading...</Card>
 			</Layout.Section>
 		</Layout>
 	</Page>
@@ -52,26 +50,29 @@ const LoadingView = props => (
 
 const handleLoading = branch(
 	path(['data', 'loading']),
-	renderComponent(LoadingView)
+	renderComponent(LoadingView),
 );
 
-const fetchSurvey = graphql(gql`
-	query {
-		survey(id: "some-id") {
-            id
-            status
-            customer {
-                firstName
-                lastName
-            }
-            review {
-                satisfied
-                comment
-            }
-            order
-        }
-	}
-`, {options: {notifyOnNetworkStatusChange: true}});
+const fetchSurvey = graphql(
+	gql`
+		query {
+			survey(id: "some-id") {
+				id
+				status
+				customer {
+					firstName
+					lastName
+				}
+				review {
+					satisfied
+					comment
+				}
+				order
+			}
+		}
+	`,
+	{options: {notifyOnNetworkStatusChange: true}},
+);
 
 const View = props => (
 	<Page
@@ -81,25 +82,23 @@ const View = props => (
 			{
 				icon: 'refresh',
 				content: 'Refresh',
-				onAction: () => props.data.refetch()
+				onAction: () => props.data.refetch(),
 			},
 			{
 				icon: 'notification',
-				content: 'Resend notification'
-			}
+				content: 'Resend notification',
+			},
 		]}
 	>
 		<Layout>
 			<Layout.Section>
-				<Card
-					title="Review"
-				>
+				<Card title="Review">
 					<Card.Section>
 						<DisplayText size="medium">Satisfied</DisplayText>
 					</Card.Section>
 					<Card.Section title="Comment">
 						<TextContainer>
-							<Markdown source={fixtureComment}/>
+							<Markdown source={fixtureComment} />
 						</TextContainer>
 					</Card.Section>
 				</Card>
@@ -114,38 +113,33 @@ const View = props => (
 			</Layout.Section>
 
 			<Layout.Section secondary>
-				<Card
-					title="Order #123123"
-					actions={[
-						{content: 'View order'}
-					]}
-				>
+				<Card title="Order #123123" actions={[{content: 'View order'}]}>
 					<ul>
-						<li><strong>Placed on:</strong> Tue, 18th March 2018</li>
-						<li><strong>Total amount:</strong> 205.00</li>
+						<li>
+							<strong>Placed on:</strong> Tue, 18th March 2018
+						</li>
+						<li>
+							<strong>Total amount:</strong> 205.00
+						</li>
 					</ul>
-
 				</Card>
-				<Card
-					actions={[{content: 'All surveys'}]}
-					title="Previous surveys"
-				>
+				<Card actions={[{content: 'All surveys'}]} title="Previous surveys">
 					<ResourceList
 						resourceName={{singular: 'survey', plural: 'surveys'}}
-						items={[{id: '1231', review: {satisfied: true, reviewedOn: new Date()}}]}
+						items={[
+							{id: '1231', review: {satisfied: true, reviewedOn: new Date()}},
+						]}
 						renderItem={({id, review}) => (
 							<ResourceList.Item
 								id={id}
-								media={<Satisfaction satisfied={review.satisfied}/>}
+								media={<Satisfaction satisfied={review.satisfied} />}
 							>
 								<h3>
-									<TextStyle variation="strong">
-										#{id}
-									</TextStyle>
+									<TextStyle variation="strong">#{id}</TextStyle>
 								</h3>
 								<div>
 									<TextStyle variation="subdued">
-										<TimeAgo date={review.reviewedOn}/>
+										<TimeAgo date={review.reviewedOn} />
 									</TextStyle>
 								</div>
 							</ResourceList.Item>

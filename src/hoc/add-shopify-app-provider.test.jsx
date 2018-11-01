@@ -6,7 +6,7 @@ describe('addShopifyAppProvider hoc', () => {
 	test('renders component properly', () => {
 		const Component = addShopifyAppProvider(() => <div>Hello world!</div>);
 
-		const renderer = testRenderer.create(<Component/>);
+		const renderer = testRenderer.create(<Component />);
 
 		const actual = renderer.toJSON();
 		const expectation = {type: 'div', props: {}, children: ['Hello world!']};

@@ -65,7 +65,8 @@
 		],
 		"rules": {
 			"react/prop-types": "off"
-		}
+		},
+		"prettier": true
 	},
 	"husky": {
 		"hooks": {

@@ -11,7 +11,7 @@ import {
 	FilterType,
 	Pagination,
 	ResourceList,
-	TextStyle
+	TextStyle,
 } from '@shopify/polaris';
 import styled from 'react-emotion';
 import {Flex, Box} from '@rebass/grid/emotion';
@@ -20,14 +20,13 @@ import {
 	compose,
 	withState,
 	withStateHandlers,
-	renderComponent
+	renderComponent,
 } from 'recompose';
-import JsonView from 'react-json-view';
 import {allPass, pipe, max, pick, path, isEmpty, pathOr} from 'ramda';
 
 const Placeholder = styled('div')`
-    padding: 100px 0;
-    text-align: center;
+	padding: 100px 0;
+	text-align: center;
 `;
 
 const LoadingView = props => (
@@ -39,19 +38,19 @@ const LoadingView = props => (
 			{
 				icon: 'refresh',
 				content: 'Refresh',
-				onAction: () => props.data.refetch()
-			}
+				onAction: () => props.data.refetch(),
+			},
 		]}
 		pagination={{
 			hasPrevious: false,
-			hasNext: false
+			hasNext: false,
 		}}
 	>
 		<Layout>
 			<Layout.Section>
 				<Card sectioned>
 					<Placeholder>
-						<Spinner/>
+						<Spinner />
 					</Placeholder>
 				</Card>
 			</Layout.Section>
@@ -62,9 +61,12 @@ const LoadingView = props => (
 const handleLoading = branch(
 	allPass([
 		path(['data', 'loading']),
-		pipe(pathOr([], ['data', 'surveys', 'surveys']), isEmpty)
+		pipe(
+			pathOr([], ['data', 'surveys', 'surveys']),
+			isEmpty,
+		),
 	]),
-	renderComponent(LoadingView)
+	renderComponent(LoadingView),
 );
 
 const handleSearch = withState('searchQuery', 'setSearchQuery', '');
@@ -73,30 +75,33 @@ const handlePagination = withStateHandlers(
 	{limit: 20, offset: 0},
 	{
 		nextPage: ({offset, limit}) => () => ({offset: offset + limit}),
-		prevPage: ({offset, limit}) => () => ({offset: max(0, offset - limit)})
+		prevPage: ({offset, limit}) => () => ({offset: max(0, offset - limit)}),
 	},
 );
 
-const fetchSurveys = graphql(gql`
-	query {
-		surveys {
+const fetchSurveys = graphql(
+	gql`
+		query {
 			surveys {
-				id
-				status
-				customer {
-					firstName
-					lastName
+				surveys {
+					id
+					status
+					customer {
+						firstName
+						lastName
+					}
+					review {
+						satisfied
+						comment
+					}
+					order
 				}
-				review {
-					satisfied
-					comment
-				}
-				order
+				total
 			}
-			total
 		}
-	}
-`, {options: {notifyOnNetworkStatusChange: true}});
+	`,
+	{options: {notifyOnNetworkStatusChange: true}},
+);
 
 const filters = [
 	{
@@ -104,25 +109,33 @@ const filters = [
 		label: 'Survey status',
 		operatorText: 'is',
 		type: FilterType.Select,
-		options: ['pending', 'complete', 'cancelled']
+		options: ['pending', 'complete', 'cancelled'],
 	},
 	{
 		key: 'reviewSatisfaction',
 		label: 'Review satisfaction',
 		operatorText: 'is',
 		type: FilterType.Select,
-		options: ['satisfied', 'not satisfied']
-	}
+		options: ['satisfied', 'not satisfied'],
+	},
 ];
 
 const Survey = ({id, status, customer, review, order}) => (
 	<ResourceList.Item
 		id={id}
 		url={`/surveys/${id}`}
-		media={<Avatar customer size="medium" name={`${customer.firstName} ${customer.lastName}`}/>}
+		media={
+			<Avatar
+				customer
+				size="medium"
+				name={`${customer.firstName} ${customer.lastName}`}
+			/>
+		}
 	>
 		<h3>
-			<TextStyle variation="strong">Order {order.id} - {customer.firstName} {customer.lastName}</TextStyle>
+			<TextStyle variation="strong">
+				Order {order.id} - {customer.firstName} {customer.lastName}
+			</TextStyle>
 		</h3>
 		<div>{review.comment}</div>
 	</ResourceList.Item>
@@ -137,14 +150,14 @@ const View = props => (
 			hasPrevious: props.offset > 0,
 			hasNext: true,
 			onPrevious: props.prevPage,
-			onNext: props.nextPage
+			onNext: props.nextPage,
 		}}
 		secondaryActions={[
 			{
 				icon: 'refresh',
 				content: 'Refresh',
-				onAction: () => props.data.refetch()
-			}
+				onAction: () => props.data.refetch(),
+			},
 		]}
 	>
 		<Layout sectioned>
@@ -154,7 +167,7 @@ const View = props => (
 					hasMoreItems
 					resourceName={{
 						singular: 'survey',
-						plural: 'surveys'
+						plural: 'surveys',
 					}}
 					filterControl={
 						<ResourceList.FilterControl
