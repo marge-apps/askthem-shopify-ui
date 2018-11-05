@@ -34,6 +34,15 @@ const loadStatistics = graphql(
 			getSurveys(status: completed, limit: 5) {
 				surveys {
 					id
+					customer {
+						fullName
+					}
+					review {
+						comment
+						createdAt
+						satisfied
+					}
+					order
 				}
 			}
 		}

@@ -1,19 +1,10 @@
 import React from 'react';
-import Markdown from 'react-markdown';
-import TimeAgo from 'react-timeago';
 import {pathOr} from 'ramda';
-import {
-	Card,
-	DisplayText,
-	Layout,
-	Page,
-	ResourceList,
-	TextStyle,
-} from '@shopify/polaris';
+import {Card, DisplayText, Layout, Page} from '@shopify/polaris';
 
-import {Satisfaction} from '../../components/satisfaction.jsx';
 import {RangePicker} from './range-picker.jsx';
 import {PerformanceChart} from './performance-chart.jsx';
+import {SurveysList} from './surveys-list.jsx';
 
 export const View = props => (
 	<Page
@@ -56,27 +47,8 @@ export const View = props => (
 					title="Latest complete surveys"
 					actions={[{content: 'View all', url: '/surveys'}]}
 				>
-					<ResourceList
-						resourceName={{singular: 'survey', plural: 'surveys'}}
-						items={[]}
-						renderItem={({orderId, review}) => (
-							<ResourceList.Item
-								id={orderId}
-								media={<Satisfaction satisfied={review.satisfied} />}
-							>
-								<h3>
-									<TextStyle variation="strong">
-										Order {orderId} - John Doe
-									</TextStyle>
-								</h3>
-								<div>
-									<TextStyle variation="subdued">
-										<TimeAgo date={review.reviewedOn} />
-									</TextStyle>
-								</div>
-								<Markdown>{review.comment}</Markdown>
-							</ResourceList.Item>
-						)}
+					<SurveysList
+						surveys={pathOr([], ['data', 'getSurveys', 'surveys'], props)}
 					/>
 				</Card>
 			</Layout.Section>

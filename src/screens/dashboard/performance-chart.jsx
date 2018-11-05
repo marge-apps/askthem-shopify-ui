@@ -9,7 +9,7 @@ import {
 	XAxis,
 	YAxis,
 } from 'recharts';
-import {map, sum} from 'ramda';
+import {map} from 'ramda';
 import {mapProps} from 'recompose';
 
 export const Chart = ({data}) => (
