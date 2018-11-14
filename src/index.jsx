@@ -7,7 +7,7 @@ import withAppProvider from './hoc/add-shopify-app-provider.jsx';
 import addRouter from './hoc/add-router.jsx';
 import addApolloClient from './hoc/add-apollo-client.jsx';
 import Dashboard from './screens/dashboard/index.jsx';
-import Surveys from './screens/surveys.jsx';
+import Surveys from './screens/surveys/index.jsx';
 import Survey from './screens/survey.jsx';
 import Settings from './screens/settings.jsx';
 

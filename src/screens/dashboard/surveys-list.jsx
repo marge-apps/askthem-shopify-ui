@@ -9,7 +9,7 @@ export const SurveysList = ({surveys}) => (
 		<ResourceList
 			resourceName={{singular: 'survey', plural: 'surveys'}}
 			items={surveys}
-			renderItem={({order, customer, review}) => (
+			renderItem={({order, review}) => (
 				<ResourceList.Item
 					id={order.id}
 					media={<Satisfaction satisfied={review.satisfied} />}
@@ -17,7 +17,7 @@ export const SurveysList = ({surveys}) => (
 				>
 					<h3>
 						<TextStyle variation="strong">
-							Order #{order.id} {customer.fullName}
+							Order #{order.id} {order.customer.fullName}
 						</TextStyle>
 					</h3>
 					<div>

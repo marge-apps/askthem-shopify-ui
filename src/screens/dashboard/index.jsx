@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import {graphql} from 'react-apollo';
-import {pathEq} from 'ramda';
+import {pathEq, path} from 'ramda';
 import {compose, withState, branch, renderComponent} from 'recompose';
 
 import {ViewLoading} from './loading.jsx';
@@ -14,7 +14,7 @@ const handleLoading = branch(
 );
 
 const handleError = branch(
-	pathEq(['data', 'error'], true),
+	path(['data', 'error']),
 	renderComponent(ViewError),
 );
 
@@ -34,9 +34,7 @@ const loadStatistics = graphql(
 			getSurveys(status: completed, limit: 5) {
 				surveys {
 					id
-					customer {
-						fullName
-					}
+					createdAt
 					review {
 						comment
 						createdAt
